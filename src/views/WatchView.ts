@@ -18,7 +18,7 @@ export class WatchView {
         if (this.watch.isLightOn()) {
             this.lightElement.style.backgroundColor = 'rgba(255, 255, 0, 0.2)'; // Light on
         } else if (this.watch.getMode() === Mode.MODE_ST_VIEW) {
-            this.lightElement.style.backgroundColor = 'black'; // Normal mode
+            this.lightElement.style.backgroundColor = 'black'; // View mode
         } else {
             this.lightElement.style.backgroundColor = 'grey'; // Edit mode
         }

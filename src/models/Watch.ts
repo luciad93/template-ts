@@ -4,9 +4,7 @@ export class Watch {
     private currentTime: Date;
     private modeStateMachine: ModeStateMachine;
     private lightOn: boolean;
-    private editTimeout: any;
     private lightTimeout: any;
-    private readonly EDIT_TIMEOUT_DURATION = 10000; // 10 seconds
     private readonly LIGHT_TIMEOUT_DURATION = 5000; // 5 seconds
 
     constructor() {
@@ -44,6 +42,7 @@ export class Watch {
 
     lightButtonPress(): void {
         this.lightOn = !this.lightOn;
+        this.resetLightTimeout();
         // console.log("Light is: ", this.lightOn);
 
     }
@@ -58,5 +57,18 @@ export class Watch {
 
     getCurrentTime(): Date {
         return this.currentTime;
+    }
+
+
+    private resetLightTimeout(): void {
+        if (this.lightTimeout) {
+            clearTimeout(this.lightTimeout);
+        }
+
+        if (this.lightOn) {
+            this.lightTimeout = setTimeout(() => {
+                this.lightOn = false;
+            }, this.LIGHT_TIMEOUT_DURATION);
+        }
     }
 }

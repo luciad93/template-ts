@@ -28,5 +28,10 @@ export class WatchController {
 
         // Initial render
         this.view.render();
+
+        // Update the view every second
+        setInterval(() => {
+            this.view.render();
+        }, 1000);
     }
 }

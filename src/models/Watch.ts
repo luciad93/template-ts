@@ -1,48 +1,48 @@
 import { Mode, ModeStateMachine } from "./ModeStateMachine";
+import * as moment from "moment-timezone"; 
+import 'moment-timezone';
+import 'moment-timezone/data/packed/latest.json';
 
 export class Watch {
     private currentTime: Date;
-    private hours: number;
-    private minutes: number;
     private modeStateMachine: ModeStateMachine;
     private lightOn: boolean;
     private lightTimeout: any;
-    private readonly LIGHT_TIMEOUT_DURATION = 5000; // 5 seconds
+    private readonly LIGHT_TIMEOUT_DURATION = 5000; 
 
-    constructor() {
-        this.currentTime = new Date();
-        this.hours = this.currentTime.getHours();
-        this.minutes = this.currentTime.getMinutes();
+    private timezoneOffset: number;
+
+    constructor(timezone: string) {
+        this.currentTime = moment.tz(new Date(), timezone).toDate(); // Initialize with current time in selected timezone
         this.modeStateMachine = new ModeStateMachine();
         this.lightOn = false;
 
+        this.timezoneOffset = this.parseTimezoneOffset(timezone);
+        console.log("Selected tz offset: ", this.timezoneOffset);
+        
         // Start a timer to update the current time every second
         setInterval(() => {
-            if (this.modeStateMachine.getState() === Mode.MODE_ST_VIEW) {
-                this.currentTime.setSeconds(this.currentTime.getSeconds() + 1);
-            }
+            this.currentTime.setSeconds(this.currentTime.getSeconds() + 1);
         }, 1000);
     }
 
     displayTime(): string {
-        // console.log("Time is: ", this.currentTime.toLocaleTimeString());
-        return this.currentTime.toLocaleTimeString();
+        const hours = String(this.currentTime.getHours()).padStart(2, '0');
+        const minutes = String(this.currentTime.getMinutes()).padStart(2, '0');
+        return `${hours}:${minutes}`;
     }
 
     modeButtonPress(): void {
         this.modeStateMachine.next();
-        console.log("Mode is: ", this.modeStateMachine.getState())
     }
 
     increaseButtonPress(): void {
         if (this.modeStateMachine.getState() === Mode.MODE_ST_HOURS) {
-            this.hours = (this.hours + 1) % 24;
+            this.currentTime.setHours((this.currentTime.getHours() + 1) % 24);
         } else if (this.modeStateMachine.getState() === Mode.MODE_ST_MINUTES) {
-            this.minutes = (this.minutes + 1) % 60;
+            this.currentTime.setMinutes((this.currentTime.getMinutes() + 1) % 60);
         }
 
-        this.currentTime.setHours(this.hours);
-        this.currentTime.setMinutes(this.minutes);
         this.modeStateMachine.startEditTimeout();
     }
 
@@ -65,7 +65,6 @@ export class Watch {
         return this.currentTime;
     }
 
-
     private resetLightTimeout(): void {
         if (this.lightTimeout) {
             clearTimeout(this.lightTimeout);
@@ -76,5 +75,13 @@ export class Watch {
                 this.lightOn = false;
             }, this.LIGHT_TIMEOUT_DURATION);
         }
+    }
+
+    private parseTimezoneOffset(timezone: string): number {
+        const match = timezone.match(/GMT([+-]\d+)/);
+        if (match) {
+            return parseInt(match[1], 10);
+        }
+        return 0;
     }
 }

@@ -4,7 +4,6 @@ export enum Mode {
     MODE_ST_MINUTES
 }
 
-
 export class ModeStateMachine {
     private currentState: Mode;
     private editTimeout: any;
@@ -30,6 +29,7 @@ export class ModeStateMachine {
                 this.currentState = Mode.MODE_ST_VIEW;
                 break;
         }
+        console.log("Mode is: ", this.currentState)
         this.startEditTimeout();
     }
 

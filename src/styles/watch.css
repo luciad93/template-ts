@@ -20,6 +20,10 @@ body {
     position: relative;
 }
 
+.hidden {
+    display: none;
+}
+
 .watch-display {
     color: white;
     font-size: 24px;
@@ -68,4 +72,23 @@ body {
 
 .highlight {
     color: yellow; /* Highlight color for placeholders */
+}
+
+.timezone-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#timezoneSelect {
+    font-size: 14px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+#createWatchButton {
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
 }

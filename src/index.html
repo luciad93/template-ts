@@ -7,7 +7,15 @@
     <link rel="stylesheet" href="./styles/watch.css">
 </head>
 <body>
-    <div class="watch-container">
+    <div class="timezone-container">
+        <label for="timezoneSelect">Select Time Zone:</label>
+        <select id="timezoneSelect">
+            <option value="GMT+1">GMT+1</option>
+            <option value="GMT+2">GMT+2</option>
+        </select>
+        <button id="createWatchButton">Create Watch</button>
+    </div>
+    <div class="watch-container hidden">
         <div id="watchDisplay" class="watch-display">
             <span id="hoursPlaceholder">HH</span>:<span id="minutesPlaceholder">MM</span>
         </div>

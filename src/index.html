@@ -4,28 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Watch Application</title>
-    <style>
-        #watchLight {
-            width: 200px;
-            height: 200px;
-            background-color: black;
-        }
-        #watchDisplay {
-            font-size: 24px;
-            color: white;
-            text-align: center;
-            padding-top: 80px;
-        }
-    </style>
+    <link rel="stylesheet" href="./styles/watch.css">
 </head>
 <body>
-    <div id="watchLight">
-        <div id="watchDisplay"></div>
+    <div class="watch-container">
+        <div id="watchDisplay" class="watch-display">
+            <span id="hoursPlaceholder">HH</span>:<span id="minutesPlaceholder">MM</span>
+        </div>
+        <button id="lightButton" >Light</button>
+        <button id="modeButton" >Mode</button>
+        <button id="increaseButton" >Increase</button>
     </div>
-    <button id="modeButton">Mode</button>
-    <button id="increaseButton">Increase</button>
-    <button id="lightButton">Light</button>
+    </div>
 
-    <script src="dist/index.js"></script>
+    <script src="../dist/bundle.js"></script>
 </body>
 </html>

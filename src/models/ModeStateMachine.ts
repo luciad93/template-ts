@@ -8,7 +8,7 @@ export enum Mode {
 export class ModeStateMachine {
     private currentState: Mode;
     private editTimeout: any;
-    private readonly EDIT_TIMEOUT_DURATION = 10000; // 10 seconds
+    private readonly EDIT_TIMEOUT_DURATION = 5000; // 10 seconds
 
     constructor() {
         this.currentState = Mode.MODE_ST_VIEW;
@@ -23,7 +23,7 @@ export class ModeStateMachine {
             case Mode.MODE_ST_VIEW:
                 this.currentState = Mode.MODE_ST_HOURS;
                 break;
-            case Mode.MODE_ST_HOURS:
+            case Mode.MODE_ST_HOURS: 
                 this.currentState = Mode.MODE_ST_MINUTES;
                 break;
             case Mode.MODE_ST_MINUTES:
@@ -37,7 +37,8 @@ export class ModeStateMachine {
         this.currentState = Mode.MODE_ST_VIEW; 
     }
 
-    private startEditTimeout(): void {
+    public startEditTimeout(): void {
+        clearTimeout(this.editTimeout);
         if (this.currentState === Mode.MODE_ST_HOURS || this.currentState === Mode.MODE_ST_MINUTES) {
             this.editTimeout = setTimeout(() => {
                 this.resetToViewState();

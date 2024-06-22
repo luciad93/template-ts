@@ -2,6 +2,8 @@ import { Mode, ModeStateMachine } from "./ModeStateMachine";
 
 export class Watch {
     private currentTime: Date;
+    private hours: number;
+    private minutes: number;
     private modeStateMachine: ModeStateMachine;
     private lightOn: boolean;
     private lightTimeout: any;
@@ -9,10 +11,10 @@ export class Watch {
 
     constructor() {
         this.currentTime = new Date();
+        this.hours = this.currentTime.getHours();
+        this.minutes = this.currentTime.getMinutes();
         this.modeStateMachine = new ModeStateMachine();
         this.lightOn = false;
-
-        
 
         // Start a timer to update the current time every second
         setInterval(() => {
@@ -34,17 +36,21 @@ export class Watch {
 
     increaseButtonPress(): void {
         if (this.modeStateMachine.getState() === Mode.MODE_ST_HOURS) {
-            this.currentTime.setHours(this.currentTime.getHours() + 1);
+            this.hours = (this.hours + 1) % 24;
         } else if (this.modeStateMachine.getState() === Mode.MODE_ST_MINUTES) {
-            this.currentTime.setMinutes(this.currentTime.getMinutes() + 1);
+            this.minutes = (this.minutes + 1) % 60;
         }
+
+        this.currentTime.setHours(this.hours);
+        this.currentTime.setMinutes(this.minutes);
+        this.modeStateMachine.startEditTimeout();
     }
 
     lightButtonPress(): void {
         this.lightOn = !this.lightOn;
-        this.resetLightTimeout();
-        // console.log("Light is: ", this.lightOn);
-
+        if (this.lightOn) {
+            this.resetLightTimeout();
+        }
     }
 
     isLightOn(): boolean {

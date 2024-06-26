@@ -9,8 +9,6 @@ export class WatchController {
     constructor(watch: Watch, view: WatchView) {
         this.watch = watch;
         this.view = view;
-
-        this.bindEvents();
     }
 
     init(): void {
@@ -26,27 +24,29 @@ export class WatchController {
              }
          }, 1000);
       
-
     }
 
-    private bindEvents() {
-        document.getElementById('modeButton')!.addEventListener('click', () => {
-            this.watch.modeButtonPress();
-            this.view.updateDisplay();
-        });
-
-        document.getElementById('increaseButton')!.addEventListener('click', () => {
-            this.watch.increaseButtonPress();
-            this.view.updateDisplay();
-        });
-
-        document.getElementById('lightButton')!.addEventListener('click', () => {
-            this.watch.lightButtonPress();
-            this.view.updateLight();
-            this.checkLightTimeout();
-
-        });
+    lightButtonPress(): void {
+        this.watch.lightButtonPress();
+        this.view.updateLight();
+        this.checkLightTimeout();
     }
+
+    modeButtonPress(): void {
+        this.watch.modeButtonPress();
+        this.view.updateDisplay();
+    }
+
+    increaseButtonPress(): void {
+        this.watch.increaseButtonPress();
+        this.view.updateDisplay();
+    }
+
+    resetButtonPress(): void {
+        this.watch.resetButtonPress();
+    }
+
+    
 
     private checkLightTimeout() {
         if (this.watch.isLightOn()) {

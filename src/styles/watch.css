@@ -40,7 +40,7 @@ body {
 }
 
 
-#lightButton, #modeButton, #increaseButton {
+#lightButton, #modeButton, #increaseButton, #resetButton {
     position: absolute;
     font-size: 10px;
     padding: 5px;
@@ -54,6 +54,12 @@ body {
 
 #lightButton {
     top: 80%;
+    left: -30px;
+    transform: translateY(-50%) rotate(-90deg);
+}
+
+#resetButton {
+    top: 20%;
     left: -30px;
     transform: translateY(-50%) rotate(-90deg);
 }

@@ -7,13 +7,14 @@ export class WatchView {
     private lightElement: HTMLElement;
     private hoursPlaceholder: HTMLElement;
     private minutesPlaceholder: HTMLElement;
+    
 
-    constructor(watch: Watch, displayElement: HTMLElement, lightElement: HTMLElement) {
+    constructor(watch: Watch,  hoursPlaceholder: HTMLElement, minutesPlaceholder: HTMLElement, displayElement: HTMLElement, lightElement: HTMLElement) {
         this.watch = watch;
         this.displayElement = displayElement;
         this.lightElement = lightElement;
-        this.hoursPlaceholder = document.getElementById('hoursPlaceholder') as HTMLElement;
-        this.minutesPlaceholder = document.getElementById('minutesPlaceholder') as HTMLElement;
+        this.hoursPlaceholder = hoursPlaceholder;
+        this.minutesPlaceholder = minutesPlaceholder;
     }
 
     public updateDisplay() {
@@ -28,28 +29,25 @@ export class WatchView {
             <span id="minutesPlaceholder" class="${mode=== Mode.MODE_ST_MINUTES ? 'highlight' : ''}">${minutes}</span>
         `;
 
-        // Update references to the placeholders
-        const hoursPlaceholder = document.getElementById('hoursPlaceholder');
-        const minutesPlaceholder = document.getElementById('minutesPlaceholder');
+       
 
         // Apply highlighting based on the current mode
-        if (hoursPlaceholder && minutesPlaceholder) {
+        if (this.hoursPlaceholder && this.minutesPlaceholder) {
             if (mode === Mode.MODE_ST_HOURS) {
-                hoursPlaceholder.classList.add('highlight');
-                minutesPlaceholder.classList.remove('highlight');
+                this.hoursPlaceholder.classList.add('highlight');
+                this.minutesPlaceholder.classList.remove('highlight');
             } else if (mode === Mode.MODE_ST_MINUTES) {
-                hoursPlaceholder.classList.remove('highlight');
-                minutesPlaceholder.classList.add('highlight');
+                this.hoursPlaceholder.classList.remove('highlight');
+                this.minutesPlaceholder.classList.add('highlight');
             } else {
-                hoursPlaceholder.classList.remove('highlight');
-                minutesPlaceholder.classList.remove('highlight');
+                this.hoursPlaceholder.classList.remove('highlight');
+                this.minutesPlaceholder.classList.remove('highlight');
             }
         }
 
         this.updateBackground(mode);
 
     }
-
 
     public updateLight() {
         if (this.watch.isLightOn()) {
@@ -60,11 +58,11 @@ export class WatchView {
     }
 
     public updateBackground(mode: Mode) {
-        const watchContainer = document.querySelector('.watch-container');
+        
         if (mode === Mode.MODE_ST_HOURS || mode === Mode.MODE_ST_MINUTES) {
-            watchContainer?.classList.add('edit-mode');
+            this.displayElement.classList.add('edit-mode');
         } else {
-            watchContainer?.classList.remove('edit-mode');
+            this.displayElement.classList.remove('edit-mode');
         }
     }
 }

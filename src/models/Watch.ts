@@ -10,9 +10,11 @@ export class Watch {
     private lightTimeout: any;
     private readonly LIGHT_TIMEOUT_DURATION = 5000; 
 
+    private timezone: string;
     private timezoneOffset: number;
 
     constructor(timezone: string) {
+        this.timezone = timezone;
         this.currentTime = moment.tz(new Date(), timezone).toDate(); // Initialize with current time in selected timezone
         this.modeStateMachine = new ModeStateMachine();
         this.lightOn = false;
@@ -29,29 +31,12 @@ export class Watch {
     displayTime(): string {
         const hours = String(this.currentTime.getHours()).padStart(2, '0');
         const minutes = String(this.currentTime.getMinutes()).padStart(2, '0');
-        return `${hours}:${minutes}`;
+        const seconds = String(this.currentTime.getSeconds()).padStart(2, '0');
+
+        return `${hours}:${minutes}:${seconds}`;
     }
 
-    modeButtonPress(): void {
-        this.modeStateMachine.next();
-    }
 
-    increaseButtonPress(): void {
-        if (this.modeStateMachine.getState() === Mode.MODE_ST_HOURS) {
-            this.currentTime.setHours((this.currentTime.getHours() + 1) % 24);
-        } else if (this.modeStateMachine.getState() === Mode.MODE_ST_MINUTES) {
-            this.currentTime.setMinutes((this.currentTime.getMinutes() + 1) % 60);
-        }
-
-        this.modeStateMachine.startEditTimeout();
-    }
-
-    lightButtonPress(): void {
-        this.lightOn = !this.lightOn;
-        if (this.lightOn) {
-            this.resetLightTimeout();
-        }
-    }
 
     isLightOn(): boolean {
         return this.lightOn;
@@ -83,5 +68,32 @@ export class Watch {
             return parseInt(match[1], 10);
         }
         return 0;
+    }
+
+    // Events logic
+
+    resetButtonPress(): void {
+        this.currentTime = moment.tz(new Date(), this.timezone).toDate(); 
+    }
+
+    modeButtonPress(): void {
+        this.modeStateMachine.next();
+    }
+
+    increaseButtonPress(): void {
+        if (this.modeStateMachine.getState() === Mode.MODE_ST_HOURS) {
+            this.currentTime.setHours((this.currentTime.getHours() + 1) % 24);
+        } else if (this.modeStateMachine.getState() === Mode.MODE_ST_MINUTES) {
+            this.currentTime.setMinutes((this.currentTime.getMinutes() + 1) % 60);
+        }
+
+        this.modeStateMachine.startEditTimeout();
+    }
+
+    lightButtonPress(): void {
+        this.lightOn = !this.lightOn;
+        if (this.lightOn) {
+            this.resetLightTimeout();
+        }
     }
 }

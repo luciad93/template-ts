@@ -1,7 +1,9 @@
 import { Watch } from "./models/Watch";
 import { WatchView } from "./views/WatchView";
 import { WatchController } from "./controllers/WatchController";
-import './styles/watch.css'
+import { Button } from "./utils/Button";
+import './styles/watch.css';
+import './styles/button.css';
 import * as moment from "moment-timezone"; 
 
 
@@ -25,6 +27,10 @@ document.getElementById('createWatchButton')!.addEventListener('click', () => {
 // Creation of new watch
 function createNewWatch(timezone: string) {
     const watch = new Watch(timezone);
+
+    const outerContainer = document.createElement('div');
+    outerContainer.classList.add('outer-container');
+
     const watchContainer = document.createElement('div');
     watchContainer.classList.add('watch-container');
 
@@ -35,40 +41,37 @@ function createNewWatch(timezone: string) {
     const hoursElement = watchDisplay.querySelector('.hours') as HTMLElement;
     const minutesElement = watchDisplay.querySelector('.minutes') as HTMLElement;
 
-    const lightButton = document.createElement('button');
-    lightButton.textContent = 'Light';
-    lightButton.id = "lightButton";
-    const modeButton = document.createElement('button');
-    modeButton.textContent = 'Mode';
-    modeButton.id = "modeButton";
-    const increaseButton = document.createElement('button');
-    increaseButton.textContent = 'Increase';
-    increaseButton.id = "increaseButton";
-    const resetButton = document.createElement('button');
-    resetButton.textContent = 'Reset';
-    resetButton.id = "resetButton";
+    const lightButton = new Button('lightButton', 'Light');
+    const modeButton = new Button('modeButton', 'Mode');
+    const increaseButton = new Button('increaseButton', 'Increase');
+    const resetButton = new Button('resetButton', 'Reset');
+    const formatButton = new Button('formatButton', 'Format');
 
-    const formatButton = document.createElement('button');
-    formatButton.textContent = 'Format';
-    formatButton.id = "formatButton";
+    const timezoneDisplay = document.createElement('div');
+    timezoneDisplay.classList.add('timezone-display');
+    timezoneDisplay.textContent = timezone;
 
+    watchContainer.appendChild(timezoneDisplay);
     watchContainer.appendChild(watchDisplay);
-    watchContainer.appendChild(lightButton);
-    watchContainer.appendChild(modeButton);
-    watchContainer.appendChild(increaseButton);
-    watchContainer.appendChild(resetButton);
-    watchContainer.appendChild(formatButton);
+    watchContainer.appendChild(lightButton.getElement());
+    watchContainer.appendChild(modeButton.getElement());
+    watchContainer.appendChild(increaseButton.getElement());
+    watchContainer.appendChild(resetButton.getElement());
+    watchContainer.appendChild(formatButton.getElement());
 
-    document.getElementById('watchesContainer')!.appendChild(watchContainer);
+    outerContainer.appendChild(timezoneDisplay);
+    outerContainer.appendChild(watchContainer);
+    
+    document.getElementById('watchesContainer')!.appendChild(outerContainer);
 
     const view = new WatchView(watch, hoursElement, minutesElement, watchDisplay, watchDisplay);
     const controller = new WatchController(watch, view);
 
-    lightButton.addEventListener('click', () => controller.lightButtonPress());
-    modeButton.addEventListener('click', () => controller.modeButtonPress());
-    increaseButton.addEventListener('click', () => controller.increaseButtonPress());
-    resetButton.addEventListener('click', () => controller.resetButtonPress());
-    formatButton.addEventListener('click', () => controller.formatButtonPress());
+    lightButton.onClick(() => controller.lightButtonPress());
+    modeButton.onClick(() => controller.modeButtonPress());
+    increaseButton.onClick(() => controller.increaseButtonPress());
+    resetButton.onClick(() => controller.resetButtonPress());
+    formatButton.onClick(() => controller.formatButtonPress());
 
     controller.init();
 

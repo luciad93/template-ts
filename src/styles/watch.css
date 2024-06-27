@@ -19,6 +19,19 @@ body {
     box-sizing: border-box;
 }
 
+
+.outer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.timezone-display {
+    color: black;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
 .watch-container {
     width: 200px;
     height: 250px;
@@ -55,48 +68,10 @@ body {
     background-color: grey; 
 }
 
-
-#lightButton, #modeButton, #increaseButton, #resetButton, #formatButton {
-    position: absolute;
-    font-size: 10px;
-    padding: 5px;
-    margin: 0;
-    border: none;
-    background-color: lightgray;
-    color: white;
-    cursor: pointer;
-    border-radius: 10px;
+.reset-mode {
+    background-color: aquamarine;
 }
 
-#lightButton {
-    top: 80%;
-    left: -30px;
-    transform: translateY(-50%) rotate(-90deg);
-}
-
-#resetButton {
-    top: 20%;
-    left: -30px;
-    transform: translateY(-50%) rotate(-90deg);
-}
-
-#modeButton {
-    top: 10px; /* Adjust to position outside the top border */
-    right: -30px; /* Adjust to position outside the right border */
-    transform: rotate(90deg); /* Rotate text */
-}
-
-#increaseButton {
-    bottom: 20px; /* Adjust to position outside the bottom border */
-    right: -35px; /* Adjust to position outside the right border */
-    transform: rotate(90deg); /* Rotate text */
-}
-
-#formatButton {
-    top: 50%;
-    left: -35px;
-    transform: translateY(-50%) rotate(-90deg);
-}
 
 .highlight {
     color: rgb(0, 255, 42); /* Highlight color for placeholders */

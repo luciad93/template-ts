@@ -73,7 +73,6 @@ export class WatchView {
     }
 
     public updateBackground(mode: Mode) {
-        
         if (mode === Mode.MODE_ST_HOURS || mode === Mode.MODE_ST_MINUTES) {
             this.displayElement.classList.add('edit-mode');
         } else {

@@ -9,31 +9,29 @@ export enum Format {
 }
 
 export class Watch {
-    private currentTime: Date;
+    private currentTime: moment.Moment;
     private modeStateMachine: ModeStateMachine;
     private lightOn: boolean;
     private lightTimeout: any;
     private readonly LIGHT_TIMEOUT_DURATION = 5000; 
 
     private timezone: string;
-    private timezoneOffset: number;
 
     private format: Format; 
 
     constructor(timezone: string) {
         this.timezone = timezone;
-        this.currentTime = moment.tz(new Date(), timezone).toDate(); // Initialize with current time in selected timezone
+        this.currentTime = moment.tz(timezone); // Initialize with current time in selected timezone
         this.modeStateMachine = new ModeStateMachine();
         this.lightOn = false;
-
-        this.timezoneOffset = this.parseTimezoneOffset(timezone);
-        console.log("Selected tz offset: ", this.timezoneOffset);
+        
+        console.log("Current time for timezone ", timezone, "is ", this.currentTime);
 
         this.format = Format.ENUM_FORMAT_24;
         
         // Start a timer to update the current time every second
         setInterval(() => {
-            this.currentTime.setSeconds(this.currentTime.getSeconds() + 1);
+            this.currentTime.add(1, 'seconds');
         }, 1000);
     }
 
@@ -46,12 +44,16 @@ export class Watch {
         return this.modeStateMachine.getState();
     }
 
-    getCurrentTime(): Date {
+    getCurrentTime():  moment.Moment {
         return this.currentTime;
     }
 
     getFormat() : Format {
         return this.format;
+    }
+
+    getTimezone() : string {
+        return this.timezone;
     }
 
     private resetLightTimeout(): void {
@@ -66,18 +68,11 @@ export class Watch {
         }
     }
 
-    private parseTimezoneOffset(timezone: string): number {
-        const match = timezone.match(/GMT([+-]\d+)/);
-        if (match) {
-            return parseInt(match[1], 10);
-        }
-        return 0;
-    }
 
     // Events logic
 
     resetButtonPress(): void {
-        this.currentTime = moment.tz(new Date(), this.timezone).toDate(); 
+        this.currentTime = moment.tz(this.timezone); 
     }
 
     modeButtonPress(): void {
@@ -85,10 +80,10 @@ export class Watch {
     }
 
     increaseButtonPress(): void {
-        if (this.modeStateMachine.getState() === Mode.MODE_ST_HOURS) {
-            this.currentTime.setHours((this.currentTime.getHours() + 1) % 24);
-        } else if (this.modeStateMachine.getState() === Mode.MODE_ST_MINUTES) {
-            this.currentTime.setMinutes((this.currentTime.getMinutes() + 1) % 60);
+        if (this.getMode() === Mode.MODE_ST_HOURS) {
+            this.currentTime.add(1, 'hours');
+        } else if (this.getMode() === Mode.MODE_ST_MINUTES) {
+            this.currentTime.add(1, 'minutes');
         }
 
         this.modeStateMachine.startEditTimeout();

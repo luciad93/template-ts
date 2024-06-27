@@ -34,7 +34,6 @@ function createNewWatch(timezone: string) {
 
     const hoursElement = watchDisplay.querySelector('.hours') as HTMLElement;
     const minutesElement = watchDisplay.querySelector('.minutes') as HTMLElement;
-    const formatElement = watchDisplay.querySelector('.format') as HTMLElement;
 
     const lightButton = document.createElement('button');
     lightButton.textContent = 'Light';
@@ -62,7 +61,7 @@ function createNewWatch(timezone: string) {
 
     document.getElementById('watchesContainer')!.appendChild(watchContainer);
 
-    const view = new WatchView(watch, hoursElement, minutesElement, watchDisplay, watchDisplay, formatElement);
+    const view = new WatchView(watch, hoursElement, minutesElement, watchDisplay, watchDisplay);
     const controller = new WatchController(watch, view);
 
     lightButton.addEventListener('click', () => controller.lightButtonPress());

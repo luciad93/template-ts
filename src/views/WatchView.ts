@@ -7,23 +7,21 @@ export class WatchView {
     private lightElement: HTMLElement;
     private hoursPlaceholder: HTMLElement;
     private minutesPlaceholder: HTMLElement;
-    private formatPlaceholder: HTMLElement;
     
 
-    constructor(watch: Watch,  hoursPlaceholder: HTMLElement, minutesPlaceholder: HTMLElement, displayElement: HTMLElement, lightElement: HTMLElement, formatPlaceholder: HTMLElement) {
+    constructor(watch: Watch,  hoursPlaceholder: HTMLElement, minutesPlaceholder: HTMLElement, displayElement: HTMLElement, lightElement: HTMLElement) {
         this.watch = watch;
         this.displayElement = displayElement;
         this.lightElement = lightElement;
         this.hoursPlaceholder = hoursPlaceholder;
         this.minutesPlaceholder = minutesPlaceholder;
-        this.formatPlaceholder = formatPlaceholder;
     }
 
     public updateDisplay() {
         const time = this.watch.getCurrentTime();
-        const hoursNb = time.getHours();
+        const hoursNb = time.hours();
         const hours = String(hoursNb).padStart(2, '0');
-        const minutes = String(time.getMinutes()).padStart(2, '0');
+        const minutes = String(time.minutes()).padStart(2, '0');
         const mode = this.watch.getMode();
         const format = this.watch.getFormat();
         

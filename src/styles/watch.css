@@ -9,6 +9,16 @@ body {
     font-family: Arial, sans-serif;
 }
 
+.watches-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 50px;
+    padding: 20px;
+    width: 100%;
+    max-width: 1200px;
+    box-sizing: border-box;
+}
+
 .watch-container {
     width: 200px;
     height: 250px;
@@ -25,9 +35,15 @@ body {
 }
 
 .watch-display {
+    display: flex;
+    justify-content: center; /* Horizontal center */
+    align-items: center; /* Vertical center */
     color: white;
     font-size: 24px;
     text-align: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
 }
 
 .watch-display.light-on {
@@ -40,7 +56,7 @@ body {
 }
 
 
-#lightButton, #modeButton, #increaseButton, #resetButton {
+#lightButton, #modeButton, #increaseButton, #resetButton, #formatButton {
     position: absolute;
     font-size: 10px;
     padding: 5px;
@@ -76,8 +92,14 @@ body {
     transform: rotate(90deg); /* Rotate text */
 }
 
+#formatButton {
+    top: 50%;
+    left: -35px;
+    transform: translateY(-50%) rotate(-90deg);
+}
+
 .highlight {
-    color: yellow; /* Highlight color for placeholders */
+    color: rgb(0, 255, 42); /* Highlight color for placeholders */
 }
 
 .timezone-container {

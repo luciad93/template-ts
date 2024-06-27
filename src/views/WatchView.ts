@@ -1,4 +1,4 @@
-import { Watch } from "../models/Watch";
+import { Format, Watch } from "../models/Watch";
 import { Mode } from "../models/ModeStateMachine";
 
 export class WatchView {
@@ -7,27 +7,44 @@ export class WatchView {
     private lightElement: HTMLElement;
     private hoursPlaceholder: HTMLElement;
     private minutesPlaceholder: HTMLElement;
+    private formatPlaceholder: HTMLElement;
     
 
-    constructor(watch: Watch,  hoursPlaceholder: HTMLElement, minutesPlaceholder: HTMLElement, displayElement: HTMLElement, lightElement: HTMLElement) {
+    constructor(watch: Watch,  hoursPlaceholder: HTMLElement, minutesPlaceholder: HTMLElement, displayElement: HTMLElement, lightElement: HTMLElement, formatPlaceholder: HTMLElement) {
         this.watch = watch;
         this.displayElement = displayElement;
         this.lightElement = lightElement;
         this.hoursPlaceholder = hoursPlaceholder;
         this.minutesPlaceholder = minutesPlaceholder;
+        this.formatPlaceholder = formatPlaceholder;
     }
 
     public updateDisplay() {
         const time = this.watch.getCurrentTime();
-        const hours = String(time.getHours()).padStart(2, '0');
+        const hoursNb = time.getHours();
+        const hours = String(hoursNb).padStart(2, '0');
         const minutes = String(time.getMinutes()).padStart(2, '0');
         const mode = this.watch.getMode();
+        const format = this.watch.getFormat();
         
-        // Update the display content with placeholders
-        this.displayElement.innerHTML = `
+        // Update the display content with placeholders depending on the format
+        if (format == Format.ENUM_FORMAT_24) {
+            this.displayElement.innerHTML = `
             <span id="hoursPlaceholder" class="${mode === Mode.MODE_ST_HOURS ? 'highlight' : ''}">${hours}</span>:
             <span id="minutesPlaceholder" class="${mode=== Mode.MODE_ST_MINUTES ? 'highlight' : ''}">${minutes}</span>
+            <span id="formatPlaceholder" class="hidden"></span>
         `;
+        }
+        else {
+            this.displayElement.innerHTML = `
+            <span id="hoursPlaceholder" class="${mode === Mode.MODE_ST_HOURS ? 'highlight' : ''}">${hoursNb % 12 || 12}</span>:
+            <span id="minutesPlaceholder" class="${mode=== Mode.MODE_ST_MINUTES ? 'highlight' : ''}">${minutes}</span>
+            <span id="formatPlaceholder"}">${hoursNb >= 12 ? "pm" : "am"}</span>
+        `;
+        }
+
+
+        
 
        
 

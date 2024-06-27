@@ -3,6 +3,11 @@ import * as moment from "moment-timezone";
 import 'moment-timezone';
 import 'moment-timezone/data/packed/latest.json';
 
+export enum Format {
+    ENUM_FORMAT_24,
+    ENUM_FORMAT_AMPM
+}
+
 export class Watch {
     private currentTime: Date;
     private modeStateMachine: ModeStateMachine;
@@ -13,6 +18,8 @@ export class Watch {
     private timezone: string;
     private timezoneOffset: number;
 
+    private format: Format; 
+
     constructor(timezone: string) {
         this.timezone = timezone;
         this.currentTime = moment.tz(new Date(), timezone).toDate(); // Initialize with current time in selected timezone
@@ -21,21 +28,14 @@ export class Watch {
 
         this.timezoneOffset = this.parseTimezoneOffset(timezone);
         console.log("Selected tz offset: ", this.timezoneOffset);
+
+        this.format = Format.ENUM_FORMAT_24;
         
         // Start a timer to update the current time every second
         setInterval(() => {
             this.currentTime.setSeconds(this.currentTime.getSeconds() + 1);
         }, 1000);
     }
-
-    displayTime(): string {
-        const hours = String(this.currentTime.getHours()).padStart(2, '0');
-        const minutes = String(this.currentTime.getMinutes()).padStart(2, '0');
-        const seconds = String(this.currentTime.getSeconds()).padStart(2, '0');
-
-        return `${hours}:${minutes}:${seconds}`;
-    }
-
 
 
     isLightOn(): boolean {
@@ -48,6 +48,10 @@ export class Watch {
 
     getCurrentTime(): Date {
         return this.currentTime;
+    }
+
+    getFormat() : Format {
+        return this.format;
     }
 
     private resetLightTimeout(): void {
@@ -94,6 +98,15 @@ export class Watch {
         this.lightOn = !this.lightOn;
         if (this.lightOn) {
             this.resetLightTimeout();
+        }
+    }
+
+    formatButtonPress(): void {
+        if (this.format == Format.ENUM_FORMAT_24) {
+            this.format = Format.ENUM_FORMAT_AMPM;
+        }
+        else {
+            this.format = Format.ENUM_FORMAT_24;
         }
     }
 }

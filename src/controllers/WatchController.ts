@@ -46,6 +46,11 @@ export class WatchController {
         this.watch.resetButtonPress();
     }
 
+    formatButtonPress(): void {
+        this.watch.formatButtonPress();
+        this.view.updateDisplay();
+    }
+
     
 
     private checkLightTimeout() {

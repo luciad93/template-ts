@@ -30,10 +30,11 @@ function createNewWatch(timezone: string) {
 
     const watchDisplay = document.createElement('div');
     watchDisplay.classList.add('watch-display');
-    watchDisplay.innerHTML = '<span class="hours">HH</span>:<span class="minutes">MM</span>';
+    watchDisplay.innerHTML = '<span class="hours">HH</span>:<span class="minutes">MM</span><span class="format"></span>';
 
     const hoursElement = watchDisplay.querySelector('.hours') as HTMLElement;
     const minutesElement = watchDisplay.querySelector('.minutes') as HTMLElement;
+    const formatElement = watchDisplay.querySelector('.format') as HTMLElement;
 
     const lightButton = document.createElement('button');
     lightButton.textContent = 'Light';
@@ -48,21 +49,27 @@ function createNewWatch(timezone: string) {
     resetButton.textContent = 'Reset';
     resetButton.id = "resetButton";
 
+    const formatButton = document.createElement('button');
+    formatButton.textContent = 'Format';
+    formatButton.id = "formatButton";
+
     watchContainer.appendChild(watchDisplay);
     watchContainer.appendChild(lightButton);
     watchContainer.appendChild(modeButton);
     watchContainer.appendChild(increaseButton);
     watchContainer.appendChild(resetButton);
+    watchContainer.appendChild(formatButton);
 
     document.getElementById('watchesContainer')!.appendChild(watchContainer);
 
-    const view = new WatchView(watch, hoursElement, minutesElement, watchDisplay, watchDisplay);
+    const view = new WatchView(watch, hoursElement, minutesElement, watchDisplay, watchDisplay, formatElement);
     const controller = new WatchController(watch, view);
 
     lightButton.addEventListener('click', () => controller.lightButtonPress());
     modeButton.addEventListener('click', () => controller.modeButtonPress());
     increaseButton.addEventListener('click', () => controller.increaseButtonPress());
     resetButton.addEventListener('click', () => controller.resetButtonPress());
+    formatButton.addEventListener('click', () => controller.formatButtonPress());
 
     controller.init();
 

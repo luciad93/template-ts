@@ -25,7 +25,7 @@ export class Watch {
         this.modeStateMachine = new ModeStateMachine();
         this.lightOn = false;
         
-        console.log("Current time for timezone ", timezone, "is ", this.currentTime);
+        // console.log("Current time for timezone ", timezone, "is ", this.currentTime);
 
         this.format = Format.ENUM_FORMAT_24;
         

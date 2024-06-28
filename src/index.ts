@@ -4,6 +4,7 @@ import { WatchController } from "./controllers/WatchController";
 import { Button } from "./utils/Button";
 import './styles/watch.css';
 import './styles/button.css';
+import './styles/popupcontainer.css'
 import * as moment from "moment-timezone"; 
 
 
@@ -18,14 +19,9 @@ timezones.forEach(tz => {
 });
 
 
-// 
-document.getElementById('createWatchButton')!.addEventListener('click', () => {
-    const selectedTimezone = timezoneSelect.value;
-    createNewWatch(selectedTimezone);
-});
-
 // Creation of new watch
 function createNewWatch(timezone: string) {
+    console.log("Creating new watch: ", timezone);
     const watch = new Watch(timezone);
 
     const outerContainer = document.createElement('div');
@@ -41,17 +37,18 @@ function createNewWatch(timezone: string) {
     const hoursElement = watchDisplay.querySelector('.hours') as HTMLElement;
     const minutesElement = watchDisplay.querySelector('.minutes') as HTMLElement;
 
-    const lightButton = new Button('lightButton', 'Light');
-    const modeButton = new Button('modeButton', 'Mode');
-    const increaseButton = new Button('increaseButton', 'Increase');
-    const resetButton = new Button('resetButton', 'Reset');
-    const formatButton = new Button('formatButton', 'Format');
+    const lightButton = new Button('lightButton', 'L');
+    const modeButton = new Button('modeButton', 'M');
+    const increaseButton = new Button('increaseButton', '+');
+    const resetButton = new Button('resetButton', 'R');
+    const formatButton = new Button('formatButton', 'F');
 
     const timezoneDisplay = document.createElement('div');
     timezoneDisplay.classList.add('timezone-display');
     timezoneDisplay.textContent = timezone;
 
-    watchContainer.appendChild(timezoneDisplay);
+
+
     watchContainer.appendChild(watchDisplay);
     watchContainer.appendChild(lightButton.getElement());
     watchContainer.appendChild(modeButton.getElement());
@@ -61,6 +58,7 @@ function createNewWatch(timezone: string) {
 
     outerContainer.appendChild(timezoneDisplay);
     outerContainer.appendChild(watchContainer);
+    
     
     document.getElementById('watchesContainer')!.appendChild(outerContainer);
 
@@ -77,3 +75,39 @@ function createNewWatch(timezone: string) {
 
 
 }
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const userGuideButton = document.getElementById('userGuideButton');
+    const userGuidePopup = document.getElementById('userGuidePopup');
+    const closePopupButton = document.getElementById('closePopupButton');
+
+    createNewWatch("Europe/Paris");
+    createNewWatch("America/Caracas");
+    createNewWatch("America/Mexico_City");
+    createNewWatch("America/New_York");
+
+    // 
+    document.getElementById('createWatchButton')!.addEventListener('click', () => {
+        const selectedTimezone = timezoneSelect.value;
+        createNewWatch(selectedTimezone);
+    });
+
+    userGuideButton.addEventListener('click', () => {
+        userGuidePopup.classList.remove('hidden');
+        userGuidePopup.style.display = 'block';
+    });
+
+    closePopupButton.addEventListener('click', () => {
+        userGuidePopup.classList.add('hidden');
+        userGuidePopup.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === userGuidePopup) {
+            userGuidePopup.classList.add('hidden');
+            userGuidePopup.style.display = 'none';
+        }
+    });
+});

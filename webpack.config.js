@@ -25,10 +25,12 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
-  plugins: [new HtmlWebpackPlugin({
+  plugins: [
+    new HtmlWebpackPlugin({
     title: 'GE Template ts',
     template: path.join(process.cwd(), 'src/index.html'),
     filename: 'index.html',
+    inject: 'body',
   })],
   devServer: {
     host: '0.0.0.0',

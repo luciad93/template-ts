@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Watch Application</title>
-    <link rel="stylesheet" href="./styles/watch.css">
-    <link rel="stylesheet" href="./styles/button.css">
 </head>
+<header>
+    <button id="userGuideButton">User Guide</button>
+</header>
 <body>
     <div class="timezone-container">
         <label for="timezoneSelect">Select Time Zone:</label>
@@ -17,6 +18,24 @@
     <div id="watchesContainer" class="watches-container"></div>
     </div>
 
-    <script src="../dist/bundle.js"></script>
+        <!-- User Guide Popup -->
+    <div id="userGuidePopup" class="popup hidden">
+        <div class="popup-content">
+            <span id="closePopupButton" class="close">&times;</span>
+            <h2>User Guide</h2>
+            <p><strong>Button Functions:</strong></p>
+            <ul>
+                <li><strong>Light:</strong> Toggles the backlight of the watch display.</li>
+                <li><strong>Mode:</strong> Cycles through the modes: View Time, Set Hours, Set Minutes.</li>
+                <li><strong>Increase:</strong> In Set Hours mode, increases the hour. In Set Minutes mode, increases the minute.</li>
+                <li><strong>Reset:</strong> Resets the current setting operation.</li>
+                <li><strong>Format:</strong> Toggles between 12-hour and 24-hour time formats.</li>
+            </ul>
+            <p><strong>Timeouts:</strong> After a period of inactivity, the watch will automatically return to View Time mode to save power and simplify usage.</p>
+        </div>
+    </div>
+
+
+    
 </body>
 </html>

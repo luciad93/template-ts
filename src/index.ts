@@ -2,6 +2,8 @@ import { Watch } from "./models/Watch";
 import { WatchView } from "./views/WatchView";
 import { WatchController } from "./controllers/WatchController";
 import { Button } from "./utils/Button";
+import { UserGuide } from "./utils/UserGuide";
+import './styles/index.css'
 import './styles/watch.css';
 import './styles/button.css';
 import './styles/popupcontainer.css'
@@ -17,7 +19,6 @@ timezones.forEach(tz => {
     option.textContent = tz;
     timezoneSelect.appendChild(option);
 });
-
 
 // Creation of new watch
 function createNewWatch(timezone: string) {
@@ -76,12 +77,12 @@ function createNewWatch(timezone: string) {
 
 }
 
-
-
 document.addEventListener('DOMContentLoaded', () => {
-    const userGuideButton = document.getElementById('userGuideButton');
-    const userGuidePopup = document.getElementById('userGuidePopup');
-    const closePopupButton = document.getElementById('closePopupButton');
+    
+    document.getElementById('createWatchButton')!.addEventListener('click', () => {
+        const selectedTimezone = timezoneSelect.value;
+        createNewWatch(selectedTimezone);
+    });
 
     createNewWatch("Europe/Paris");
     createNewWatch("America/Caracas");
@@ -89,25 +90,13 @@ document.addEventListener('DOMContentLoaded', () => {
     createNewWatch("America/New_York");
 
     // 
-    document.getElementById('createWatchButton')!.addEventListener('click', () => {
-        const selectedTimezone = timezoneSelect.value;
-        createNewWatch(selectedTimezone);
+    const userGuide = new UserGuide('userGuideButton', 'userGuidePopup', 'closePopupButton');
+
+    const removeAllWatchesButton = document.getElementById('removeAllWatchesButton');
+    removeAllWatchesButton.addEventListener('click', () => {
+        const watchesContainer = document.getElementById('watchesContainer');
+        watchesContainer.innerHTML = '';
     });
 
-    userGuideButton.addEventListener('click', () => {
-        userGuidePopup.classList.remove('hidden');
-        userGuidePopup.style.display = 'block';
-    });
 
-    closePopupButton.addEventListener('click', () => {
-        userGuidePopup.classList.add('hidden');
-        userGuidePopup.style.display = 'none';
-    });
-
-    window.addEventListener('click', (event) => {
-        if (event.target === userGuidePopup) {
-            userGuidePopup.classList.add('hidden');
-            userGuidePopup.style.display = 'none';
-        }
-    });
 });

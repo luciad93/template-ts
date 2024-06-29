@@ -1,12 +1,8 @@
-body {
+
+.outer-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f0f0f0;
-    font-family: Arial, sans-serif;
 }
 
 .watches-container {
@@ -17,20 +13,10 @@ body {
     width: 100%;
     max-width: 1200px;
     box-sizing: border-box;
+    margin-top: 60px;
 }
 
 
-.outer-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.timezone-display {
-    color: black;
-    font-size: 14px;
-    margin-bottom: 10px;
-}
 
 .watch-container {
     width: 200px;
@@ -72,39 +58,4 @@ body {
 
 .highlight {
     color: rgb(0, 255, 42); /* Highlight color for placeholders */
-}
-
-.timezone-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-#timezoneSelect {
-    font-size: 14px;
-    padding: 5px;
-    margin-bottom: 10px;
-}
-
-#createWatchButton {
-    padding: 5px 10px;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-.close-button {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    background-color: red;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    font-size: 16px;
-    line-height: 18px;
-    text-align: center;
-    cursor: pointer;
 }

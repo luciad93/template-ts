@@ -1,41 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Watch Application</title>
 </head>
-<header>
-    <button id="userGuideButton">User Guide</button>
-</header>
+
 <body>
-    <div class="timezone-container">
-        <label for="timezoneSelect">Select Time Zone:</label>
-        <select id="timezoneSelect">
-        </select>
-        <button id="createWatchButton">Create Watch</button>
+    <div class="fixed-top-container">
+        <div class="timezone-container">
+            <label for="timezoneSelect">Select Time Zone:</label>
+            <select id="timezoneSelect"></select>
+            <button id="createWatchButton">Create Watch</button>
+        </div>
+        <div class="buttons-container">
+            <button id="userGuideButton">User Guide</button>
+            <button id="removeAllWatchesButton">Remove All Watches</button>
+        </div>
     </div>
     <div id="watchesContainer" class="watches-container"></div>
     </div>
-
-        <!-- User Guide Popup -->
-    <div id="userGuidePopup" class="popup hidden">
+    <!-- User Guide Popup -->
+    <div id="userGuidePopup" class="popup hidden" style="display: none;">
         <div class="popup-content">
             <span id="closePopupButton" class="close">&times;</span>
             <h2>User Guide</h2>
             <p><strong>Button Functions:</strong></p>
             <ul>
-                <li><strong>Light:</strong> Toggles the backlight of the watch display.</li>
-                <li><strong>Mode:</strong> Cycles through the modes: View Time, Set Hours, Set Minutes.</li>
-                <li><strong>Increase:</strong> In Set Hours mode, increases the hour. In Set Minutes mode, increases the minute.</li>
-                <li><strong>Reset:</strong> Resets the current setting operation.</li>
-                <li><strong>Format:</strong> Toggles between 12-hour and 24-hour time formats.</li>
+                <li><strong>L - Light:</strong> Toggles the backlight of the watch display.</li>
+                <li><strong>M - Mode:</strong> Cycles through the modes: View Time, Edit Hours, Edit Minutes.</li>
+                <li><strong>I - Increase:</strong> In Edit Hours mode, increases the hour. In Edit Minutes mode,
+                    increases the minute.</li>
+                <li><strong>R - Reset:</strong> Resets the current setting operation.</li>
+                <li><strong>F - Format:</strong> Toggles between 12-hour and 24-hour time formats.</li>
             </ul>
-            <p><strong>Timeouts:</strong> After a period of inactivity, the watch will automatically return to View Time mode to save power and simplify usage.</p>
+            <p><strong>Timeouts:</strong> After a period of inactivity in Edit mode, the watch will automatically return
+                to View Time mode to save power and simplify usage.
+                The light will also turn off automatically after a timeout.</p>
         </div>
     </div>
-
-
-    
 </body>
+
 </html>

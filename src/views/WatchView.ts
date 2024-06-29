@@ -65,6 +65,7 @@ export class WatchView {
     }
 
     public updateLight() {
+        // Updates light depending on the state of the light
         if (this.watch.isLightOn()) {
             this.lightElement.classList.add('light-on');
         } else {
@@ -73,6 +74,7 @@ export class WatchView {
     }
 
     public updateBackground(mode: Mode) {
+        // If in edit mode, add a background as visual indicator
         if (mode === Mode.MODE_ST_HOURS || mode === Mode.MODE_ST_MINUTES) {
             this.displayElement.classList.add('edit-mode');
         } else {

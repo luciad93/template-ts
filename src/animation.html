@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation Demo</title>
+</head>
+
+<body>
+    <h1>Animation Demo</h1>
+    <div class="sliders-container">
+        <label for="rotateSlider">Rotate:</label>
+        <input type="range" id="rotateSlider" min="0" max="360" value="0">
+        
+        <label for="scaleSlider">Scale:</label>
+        <input type="range" id="scaleSlider" min="0.5" max="2" step="0.1" value="1">
+        
+        <label for="translateXSlider">Translate X:</label>
+        <input type="range" id="translateXSlider" min="-100" max="100" value="0">
+        
+        <label for="translateYSlider">Translate Y:</label>
+        <input type="range" id="translateYSlider" min="-100" max="100" value="0">
+    </div>
+    <canvas id="animationCanvas" width="500" height="500"></canvas>
+
+</body>
+
+</html>

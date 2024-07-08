@@ -98,5 +98,10 @@ document.addEventListener('DOMContentLoaded', () => {
         watchesContainer.innerHTML = '';
     });
 
+    const animatePageButton = document.getElementById('animatePageButton');
+    animatePageButton.addEventListener('click', () => {
+        window.location.href = 'animation.html';
+    });
+
 
 });

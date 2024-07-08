@@ -2,7 +2,7 @@
   "name": "template-ts",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "clean": "rimraf dist/",
     "build": "npm run clean && webpack --mode production --config webpack.config.js",

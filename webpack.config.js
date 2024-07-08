@@ -2,7 +2,10 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './src/index.ts',
+  entry: {
+     index: './src/index.ts',
+    animate: './src/animate.ts'
+  } ,
   devtool: 'source-map',
   target: 'node',
   module: {
@@ -22,7 +25,7 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js'],
   },
   output: {
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
   plugins: [
@@ -30,8 +33,17 @@ module.exports = {
     title: 'GE Template ts',
     template: path.join(process.cwd(), 'src/index.html'),
     filename: 'index.html',
+    chunks: ['index'],
     inject: 'body',
-  })],
+  }), 
+  new HtmlWebpackPlugin({
+    title: 'GE Template ts',
+    template: path.join(process.cwd(), 'src/animation.html'),
+    filename: 'animation.html',
+    chunks: ['animate'],
+    inject: 'body',
+  })
+],
   devServer: {
     host: '0.0.0.0',
     port: '1234',
